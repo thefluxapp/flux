@@ -1,14 +1,24 @@
 import React from "react"
-import { SafeAreaView, Text, View } from "react-native"
+import { observer } from "mobx-react-lite"
+import { API_URL } from "@env"
+import axios from "axios"
+import { NavigationContainer } from "@react-navigation/native"
 
-export const App = () => {
+import { useRootContext } from "../context"
+import { MainScreen } from "./screens/main"
+
+axios.defaults.baseURL = API_URL
+
+export const App = observer(() => {
+  const rootStore = useRootContext()
+
   // const isDarkMode = useColorScheme() === 'dark';
 
+  if (!rootStore.isInitialized) return null
+
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Hello flux!</Text>
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <MainScreen />
+    </NavigationContainer>
   )
-}
+})

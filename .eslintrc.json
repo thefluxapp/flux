@@ -3,5 +3,5 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "extends": ["@react-native-community", "prettier"]
+  "extends": ["@react-native-community", "plugin:@typescript-eslint/recommended", "prettier"]
 }
