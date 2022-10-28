@@ -22,7 +22,6 @@ export const App = observer(() => {
         <RootStack.Screen name="Main" component={MainScreen} />
         <RootStack.Screen name="Stream" component={StreamScreen} />
       </RootStack.Navigator>
-      <MainScreen />
     </NavigationContainer>
   )
 })
