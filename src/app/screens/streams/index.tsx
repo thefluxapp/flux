@@ -1,5 +1,6 @@
 import React from "react"
 import { Button, FlatList, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, View } from "react-native"
+import { useHeaderHeight } from "@react-navigation/elements"
 import { observer } from "mobx-react-lite"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { useNavigation } from "@react-navigation/native"
@@ -7,13 +8,14 @@ import { useNavigation } from "@react-navigation/native"
 import { useRootContext } from "../../../context"
 import { StreamData } from "./data"
 import { RootStackParamList } from "../.."
-import { PostModule } from "../../modules/post"
 
 type StreamsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Streams">
 
 export const StreamsScreen = observer(() => {
   const navigation = useNavigation<StreamsScreenNavigationProp>()
   const rootStore = useRootContext()
+  const headerHeight = useHeaderHeight()
+  // const { colors } = useTheme()
 
   const renderItem = ({ item }: { item: StreamData }) => (
     <View>
@@ -29,22 +31,25 @@ export const StreamsScreen = observer(() => {
   )
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <View style={styles.streams}>
-          <FlatList data={rootStore.streamsStore.streams} renderItem={renderItem} keyExtractor={(item) => item.id} />
-        </View>
-
-        <View style={styles.post}>
-          <PostModule />
-        </View>
+    <SafeAreaView style={styles.root}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={headerHeight}
+      >
+        <FlatList
+          style={styles.streams}
+          data={rootStore.streamsStore.streams}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   )
 })
 
 const styles = StyleSheet.create({
+  root: { flex: 1 },
   container: { flex: 1 },
   streams: { flexGrow: 1 },
-  post: { backgroundColor: "red" },
 })

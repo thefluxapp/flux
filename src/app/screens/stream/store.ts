@@ -6,8 +6,9 @@ import { MessageData } from "./data"
 export class StreamStore {
   // streamsStore: StreamsStore
   initialized = false
-  stream?: StreamData
-  messages?: MessageData[] = []
+  stream?: StreamData = undefined
+  message?: MessageData = undefined
+  messages: MessageData[] = []
 
   constructor(stream_id: string) {
     makeAutoObservable(this)
@@ -30,5 +31,10 @@ export class StreamStore {
     runInAction(() => {
       this.initialized = true
     })
+  }
+
+  setMessage(message: MessageData) {
+    console.log("SET MESSAGE", message)
+    this.message = message
   }
 }

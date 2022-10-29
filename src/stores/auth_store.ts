@@ -5,7 +5,7 @@ import axios from "axios"
 
 export class AuthStore {
   rootStore: RootStore
-  jwt: string | null = null
+  jwt: string | undefined | null
   initialized = false
 
   constructor(rootStore: RootStore) {
@@ -17,6 +17,7 @@ export class AuthStore {
 
   autoLogin = async () => {
     const { data } = await axios.post<{ id: string; token: string }>("/session/auth")
+    console.log("qqq", data)
 
     try {
       await EncryptedStorage.setItem("jwt", data.token)
@@ -32,7 +33,7 @@ export class AuthStore {
   initialize = async () => {
     const jwt = await EncryptedStorage.getItem("jwt")
 
-    if (jwt === null) this.autoLogin()
+    if (!jwt) this.autoLogin()
 
     runInAction(() => {
       this.jwt = jwt
