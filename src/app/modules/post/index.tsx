@@ -31,14 +31,9 @@ export const PostModule = observer(({ streamStore }: { streamStore: StreamStore 
           <Text>{message.text}</Text>
         </View>
       )}
-      <View style={styles.root}>
-        <View style={styles.text}>
-          <TextInput
-            multiline
-            onChangeText={setText}
-            value={text}
-            style={[styles.input, { borderColor: colors.border }]}
-          />
+      <View style={[styles.root]}>
+        <View style={[styles.text, { backgroundColor: colors.border }]}>
+          <TextInput multiline onChangeText={setText} value={text} style={[styles.input, { color: colors.text }]} />
         </View>
 
         <Button onPress={handleSubmit} title="Send" />
@@ -48,7 +43,11 @@ export const PostModule = observer(({ streamStore }: { streamStore: StreamStore 
 })
 
 const styles = StyleSheet.create({
-  root: { flexDirection: "row", paddingVertical: 8, paddingHorizontal: 12 },
-  text: { flex: 1 },
-  input: { backgroundColor: "white", borderWidth: 1, borderRadius: 4, fontSize: 14, lineHeight: 18, padding: 4 },
+  root: {
+    flexDirection: "row",
+    paddingVertical: 0,
+    paddingHorizontal: 12,
+  },
+  text: { flex: 1, borderRadius: 20, paddingVertical: 4, paddingHorizontal: 4 },
+  input: { fontSize: 14, lineHeight: 20, paddingVertical: 8, paddingHorizontal: 8 },
 })

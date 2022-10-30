@@ -30,13 +30,14 @@ export const StreamScreen = observer(() => {
           keyboardVerticalOffset={headerHeight}
         >
           <FlatList
+            style={styles.messages}
             data={streamStore.messages}
             renderItem={({ item }) => <Message item={item} />}
             keyExtractor={(item) => item.id}
           />
 
           {streamStore.stream && (
-            <View style={[styles.post, { backgroundColor: colors.background }]}>
+            <View style={[{ backgroundColor: colors.background }]}>
               <PostModule streamStore={streamStore} />
             </View>
           )}
@@ -49,6 +50,7 @@ export const StreamScreen = observer(() => {
 const Message = ({ item }: { item: MessageData }) => {
   const streamStore = useStreamContext()
   const navigation = useNavigation<StreamsScreenNavigationProp>()
+  const { colors } = useTheme()
 
   // const renderItem = ({ item }: { item: StreamData }) => (
 
@@ -68,9 +70,9 @@ const Message = ({ item }: { item: MessageData }) => {
   }
 
   return (
-    <View>
+    <View style={[styles.message, { backgroundColor: colors.card }]}>
       <Pressable onLongPress={() => handleLongPress(item)} onPress={() => handlePress(item)}>
-        <Text>{item.text}</Text>
+        <Text style={{ color: colors.text }}>{item.text}</Text>
       </Pressable>
     </View>
   )
@@ -81,5 +83,6 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   container: { flex: 1 },
   streams: { flexGrow: 1 },
-  post: {},
+  messages: { padding: 8 },
+  message: { padding: 8, marginBottom: 8, borderRadius: 8 },
 })

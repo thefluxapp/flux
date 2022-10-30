@@ -1,14 +1,16 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import { useRootContext } from "../context"
 import { MainScreen } from "./screens/main"
 import { StreamScreen } from "./screens/stream"
+import { useColorScheme } from "react-native"
 
 export const App = observer(() => {
   const rootStore = useRootContext()
+  const scheme = useColorScheme()
 
   // const isDarkMode = useColorScheme() === 'dark';
 
@@ -17,7 +19,7 @@ export const App = observer(() => {
   const RootStack = createNativeStackNavigator()
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === "dark" ? DarkTheme : DefaultTheme}>
       <RootStack.Navigator>
         <RootStack.Screen name="Main" component={MainScreen} />
         <RootStack.Screen name="Stream" component={StreamScreen} />
